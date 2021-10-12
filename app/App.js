@@ -1,11 +1,13 @@
 // @flow
 import React from 'react';
 import {StyleSheet, View, SafeAreaView} from 'react-native';
-import {NavBar, Button, Text} from 'naxos';
+import {NavBar, Button, Text, Content} from 'naxos';
 
 export default () => (
   <SafeAreaView style={styles.screen}>
-    <Text large>NavBar</Text>
+    <Content>
+      <Text large>NavBar</Text>
+    </Content>
     <NavBar title="naxos" />
     <NavBar>
       <NavBar.Left>
@@ -15,11 +17,13 @@ export default () => (
         <Text>Hello</Text>
       </NavBar.Middle>
     </NavBar>
-    <Text large>Button</Text>
-    <Button title="Click me" />
-    <Button>
-      <Text>Click children</Text>
-    </Button>
+    <Content>
+      <Text large>Button</Text>
+      <Button title="Click me" />
+      <Button>
+        <Text>Click children</Text>
+      </Button>
+    </Content>
   </SafeAreaView>
 );
 

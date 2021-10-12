@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color } from '..'
+import { Color, mergeStyles } from '..'
 
 const createBaseStyles = () => ({
   wrapper: {
@@ -12,20 +12,6 @@ const createBaseStyles = () => ({
     color: Color.interact,
   },
 })
-
-const mergeStyles = (base, user) => {
-  // Check if styles are valid.
-  const baseStyles = StyleSheet.create(base)
-
-  if (!user) {
-    return baseStyles
-  }
-
-  const userStyles = StyleSheet.create(user)
-
-  // TODO possibly return array with second as overrides?
-  return Object.assign(baseStyles, userStyles)
-}
 
 export type Props = {
   children?: ReactNode,

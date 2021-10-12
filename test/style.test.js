@@ -1,7 +1,7 @@
 // @flow
-import React from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
-import renderer from 'react-test-renderer'
+import renderer, { act } from 'react-test-renderer'
 import { Button, Color, configure } from 'naxos'
 
 const highlightColor = '#ee5602'
@@ -54,4 +54,50 @@ test('Button styles can modified through styles prop.', () => {
   const tree = rendered.toJSON()
 
   expect(tree.children[0].children[0].props.style.color).toEqual(highlightColor)
+})
+
+test('Memoized styles can be updated.', () => {
+  let colorState
+  let titleState
+  const renderCount = jest.fn()
+
+  const DynamicComponent = () => {
+    colorState = useState('red')
+    titleState = useState('Press me!')
+    renderCount(colorState[0], titleState[0])
+    return (
+      <Button
+        title={titleState[0]}
+        styles={{ text: { color: colorState[0] } }}
+      />
+    )
+  }
+
+  const rendered = renderer.create(<DynamicComponent />)
+
+  let tree = rendered.toJSON()
+
+  expect(colorState).toBeDefined()
+  expect(tree.children[0].children[0].props.style.color).toEqual('red')
+  expect(renderCount.mock.calls.length).toBe(1)
+
+  act(() => {
+    colorState[1]('blue')
+  })
+
+  tree = rendered.toJSON()
+
+  expect(tree.children[0].children[0].props.style.color).toEqual('blue')
+  expect(renderCount.mock.calls.length).toBe(2)
+  expect(tree.children[0].children[0].children[0]).toBe('Press me!')
+
+  act(() => {
+    titleState[1]('Press again!')
+  })
+
+  tree = rendered.toJSON()
+
+  expect(tree.children[0].children[0].props.style.color).toEqual('blue')
+  expect(renderCount.mock.calls.length).toBe(3)
+  expect(tree.children[0].children[0].children[0]).toBe('Press again!')
 })

@@ -1,3 +1,5 @@
+import { StyleSheet } from 'react-native'
+
 export const Color = {
   highlight: '#ee5602',
   interact: '#029bee',
@@ -44,4 +46,18 @@ export const configure = (inputs = {}) => {
   if (inputs.Font) {
     Object.assign(Font, inputs.Font)
   }
+}
+
+export const mergeStyles = (base, user) => {
+  // Check if styles are valid.
+  const baseStyles = StyleSheet.create(base)
+
+  if (!user) {
+    return baseStyles
+  }
+
+  const userStyles = StyleSheet.create(user)
+
+  // TODO possibly return array with second as overrides? harder to debug...
+  return Object.assign(baseStyles, userStyles)
 }
