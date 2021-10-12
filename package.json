@@ -2,15 +2,15 @@
   "name": "naxos",
   "description": "React Native UI components library.",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "app": "node create-app.js",
-    "watch": "cpx 'src/**/*' app/node_modules/naxos/src --watch",
+    "watch": "cpx '{component/**/*,style/**/*,index.js,package.json}' app/node_modules/naxos --watch",
     "install-to-app": "npm i --no-save $(npm pack . | tail -1)  --prefix app",
     "test": "jest",
-    "lint": "eslint ./src --fix",
-    "format": "prettier \"src/**/*\" --write"
+    "lint": "eslint . --fix",
+    "format": "prettier \"{component,style}/**/*\" --write"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -33,6 +33,10 @@
   },
   "eslintConfig": {
     "extends": "@react-native-community",
+    "ignorePatterns": [
+      ".github",
+      "app"
+    ],
     "rules": {
       "semi": 0
     }
@@ -43,7 +47,7 @@
       "/app/"
     ],
     "moduleNameMapper": {
-      "naxos": "<rootDir>/src"
+      "naxos": "<rootDir>"
     }
   },
   "files": [
