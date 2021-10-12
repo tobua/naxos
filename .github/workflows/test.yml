@@ -14,5 +14,6 @@ jobs:
           node-version: '16'
           check-latest: true
       - name: Test 📱
-        run: npm install
-        run: npm test
+        run: |
+          npm install
+          npm test
