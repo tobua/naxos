@@ -1,10 +1,22 @@
-name: publish
+name: push
 
 on:
   push:
     branches: [main]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          check-latest: true
+      - name: Test 📱
+        run: |
+          npm install
+          npm test
   release:
     runs-on: ubuntu-latest
     steps:
@@ -14,6 +26,7 @@ jobs:
           node-version: '14'
           check-latest: true
       - run: npm install
+      - run: npm install --no-save @actions/core @actions/github node-fetch@cjs standard-version
       - uses: tobua/release-npm-action@v0
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
