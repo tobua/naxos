@@ -1,9 +1,10 @@
 // @flow
-import React, { Children, useState } from 'react'
+import React, { Children, useState, useMemo } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { Color, Font, mergeStyles } from '..'
 
-const styles = StyleSheet.create({
+const createBaseStyles = () => ({
   wrapper: {
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -21,11 +22,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
   },
+  title: {
+    ...Font.bold,
+    ...Font.large,
+    color: Color.highlight,
+  },
 })
 
 export type Props = {
   children: ReactNode,
   title?: string,
+  styles?: StyleSheet.NamedStyles,
 }
 
 const getChild = (children, Component) => {
@@ -45,20 +52,21 @@ const getChild = (children, Component) => {
   return children.find((child) => child.type.name === Component.name)
 }
 
-export const NavBar = ({ children, title }: Props) => {
+export const NavBar = ({ children, title, styles }: Props) => {
+  const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   let Left = getChild(children, NavBar.Left)
   let Middle = getChild(children, NavBar.Middle)
   let Right = getChild(children, NavBar.Right)
 
   if (!Middle) {
-    Middle = <Text>{title}</Text>
+    Middle = <Text style={sheet.title}>{title}</Text>
   }
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.left}>{Left}</View>
-      <View style={styles.middle}>{Middle}</View>
-      <View style={styles.right}>{Right}</View>
+    <View style={sheet.wrapper}>
+      <View style={sheet.left}>{Left}</View>
+      <View style={sheet.middle}>{Middle}</View>
+      <View style={sheet.right}>{Right}</View>
     </View>
   )
 }
@@ -74,3 +82,5 @@ NavBar.Middle = function Middle({ children }) {
 NavBar.Right = function Right({ children }) {
   return children
 }
+
+NavBar.createStyles = createBaseStyles

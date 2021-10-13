@@ -25,8 +25,6 @@ jobs:
         with:
           node-version: '14'
           check-latest: true
-      - run: npm install
-      - run: npm install --no-save @actions/core @actions/github node-fetch@cjs standard-version
       - uses: tobua/release-npm-action@v0
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

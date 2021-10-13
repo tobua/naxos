@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "app": "node create-app.js",
-    "watch": "cpx '{component/**/*,style/**/*,index.js,package.json}' app/node_modules/naxos --watch",
+    "watch": "cpx '{component/**/*,style/**/*,asset/**/*,index.js,package.json}' app/node_modules/naxos --watch",
     "install-to-app": "npm i --no-save $(npm pack . | tail -1)  --prefix app",
     "test": "jest",
     "lint": "eslint . --fix",
@@ -52,7 +52,8 @@
   },
   "files": [
     "component",
-    "style"
+    "style",
+    "asset"
   ],
   "keywords": [
     "react-native",
