@@ -12,6 +12,9 @@ import menu from '../asset/icon/menu.png'
 import menuRounded from '../asset/icon/menu-rounded.png'
 import pointer from '../asset/icon/pointer.png'
 import pointerRounded from '../asset/icon/pointer-rounded.png'
+import like from '../asset/icon/like.png'
+import note from '../asset/icon/note.png'
+import trash from '../asset/icon/trash.png'
 
 const icons = {
   arrow: {
@@ -33,13 +36,22 @@ const icons = {
     regular: pointer,
     rounded: pointerRounded,
   },
+  like: {
+    regular: like,
+  },
+  note: {
+    regular: note,
+  },
+  trash: {
+    regular: trash,
+  },
 }
 
 const createBaseStyles = () => ({
   image: {},
   small: {
     width: 10,
-    heigh: 10,
+    height: 10,
   },
   medium: {
     width: 20,
