@@ -3,6 +3,12 @@ name: push
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      type:
+        description: Regular or major release?
+        default: regular
+        required: true
 
 jobs:
   test:
