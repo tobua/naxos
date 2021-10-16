@@ -1,7 +1,7 @@
 // @flow
 import React, { useMemo, useState } from 'react'
 import type { Node } from 'react'
-import { Text, TouchableHighlight, StyleSheet, View } from 'react-native'
+import { Text, TouchableOpacity, StyleSheet, View } from 'react-native'
 import { Color, mergeStyles } from '..'
 
 const createBaseStyles = () => ({
@@ -26,15 +26,10 @@ const createBaseStyles = () => ({
     ],
   },
   open: {
-    position: 'absolute',
-    top: 38,
     width: '100%',
     backgroundColor: 'lightgray',
     borderRadius: 10,
     padding: 10,
-    // TODO -1 in Input is what actually applies.
-    zIndex: 2,
-    elevation: 2,
   },
 })
 
@@ -56,26 +51,26 @@ export const Dropdown: (Props) => Node = ({
   const [open, setOpen] = useState(false)
 
   return (
-    <TouchableHighlight onPress={() => !open && setOpen(true)}>
+    <TouchableOpacity onPress={() => !open && setOpen(true)}>
       <View style={sheet.wrapper}>
         <Text style={sheet.text}>{current}</Text>
         <Text style={sheet.indicator}>{'>'}</Text>
         {open && (
           <View style={sheet.open}>
             {options.map((option) => (
-              <TouchableHighlight
+              <TouchableOpacity
                 key={option}
                 onPress={() =>
                   setCurrent(option) || setOpen(false) || onChange(option)
                 }
               >
                 <Text>{option}</Text>
-              </TouchableHighlight>
+              </TouchableOpacity>
             ))}
           </View>
         )}
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   )
 }
 
