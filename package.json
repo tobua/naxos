@@ -1,7 +1,7 @@
 {
   "name": "naxos",
   "description": "React Native UI components library.",
-  "version": "0.0.0-auto-generated",
+  "version": "0.0.0-development",
   "license": "MIT",
   "main": "index.js",
   "type": "module",
