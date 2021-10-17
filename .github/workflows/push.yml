@@ -23,7 +23,21 @@ jobs:
         run: |
           npm install
           npm test
-  release:
+  # release:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14'
+  #         check-latest: true
+  #     - uses: tobua/release-npm-action@v0
+  #       with:
+  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         type: ${{ github.event.inputs.type }}
+  publish:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -32,8 +46,8 @@ jobs:
         with:
           node-version: '14'
           check-latest: true
-      - uses: tobua/release-npm-action@v0
-        with:
+      - name: Release 🚀
+        run: npx semantic-release
+        env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          type: ${{ github.event.inputs.type }}

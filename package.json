@@ -26,7 +26,8 @@
     "react-native": "^0.66.0",
     "react-test-renderer": "^17.0.2",
     "recursive-copy": "^2.0.13",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "semantic-release": "^18.0.0"
   },
   "prettier": {
     "singleQuote": true,
