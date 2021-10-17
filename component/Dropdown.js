@@ -2,34 +2,26 @@
 import React, { useMemo, useState } from 'react'
 import type { Node } from 'react'
 import { Text, TouchableOpacity, StyleSheet, View } from 'react-native'
-import { Color, mergeStyles } from '..'
+import { Color, Font, mergeStyles, Space, Icon } from '..'
 
 const createBaseStyles = () => ({
-  wrapper: {
-    backgroundColor: 'lightgray',
-    borderRadius: 10,
-    marginBottom: 20,
-    position: 'relative',
+  wrapper: {},
+  main: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  text: {
-    padding: 10,
-  },
-  indicator: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
-    fontWeight: 'bold',
-    transform: [
-      {
-        rotate: '90deg',
-      },
-    ],
-  },
+  currentText: {},
   open: {
     width: '100%',
-    backgroundColor: 'lightgray',
-    borderRadius: 10,
-    padding: 10,
+    marginTop: Space.small,
+    paddingLeft: Space.small,
+  },
+  option: {
+    paddingBottom: Space.tiny,
+  },
+  activeOption: {
+    ...Font.bold,
   },
 })
 
@@ -53,8 +45,14 @@ export const Dropdown: (Props) => Node = ({
   return (
     <TouchableOpacity onPress={() => !open && setOpen(true)}>
       <View style={sheet.wrapper}>
-        <Text style={sheet.text}>{current}</Text>
-        <Text style={sheet.indicator}>{'>'}</Text>
+        <View style={sheet.main}>
+          <Text style={sheet.currentText}>{current}</Text>
+          <Icon
+            name="pointer"
+            direction={open ? 'top' : 'bottom'}
+            size="small"
+          />
+        </View>
         {open && (
           <View style={sheet.open}>
             {options.map((option) => (
@@ -64,7 +62,13 @@ export const Dropdown: (Props) => Node = ({
                   setCurrent(option) || setOpen(false) || onChange(option)
                 }
               >
-                <Text>{option}</Text>
+                <View style={sheet.option}>
+                  <Text
+                    style={[current === option ? sheet.activeOption : null]}
+                  >
+                    {option}
+                  </Text>
+                </View>
               </TouchableOpacity>
             ))}
           </View>

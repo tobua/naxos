@@ -87,13 +87,17 @@ export const Icon = ({
   direction = 'right',
   rounded,
   size = 'medium',
+  color = 'black',
   styles,
 }: Props) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const icon = icons[name][rounded ? 'rounded' : 'regular']
 
   return (
-    <Image style={[sheet.image, sheet[size], sheet[direction]]} source={icon} />
+    <Image
+      style={[sheet.image, sheet[size], sheet[direction], { tintColor: color }]}
+      source={icon}
+    />
   )
 }
 

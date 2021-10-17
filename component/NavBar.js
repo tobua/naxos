@@ -2,13 +2,14 @@
 import React, { Children, useState, useMemo } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Font, mergeStyles } from '..'
+import { Color, Font, mergeStyles, Space } from '..'
 
 const createBaseStyles = () => ({
   wrapper: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    padding: 10,
+    padding: Space.small,
+    alignItems: 'center',
   },
   left: {
     flex: 1,

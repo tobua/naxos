@@ -1,5 +1,5 @@
 // @flow
-import React, { Children, useState, useMemo } from 'react'
+import React, { Children, useState, useMemo, cloneElement } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { Color, Font, mergeStyles } from '..'
@@ -50,7 +50,7 @@ export const TabBar = ({ children, styles, onPress }: Props) => {
           key={child.key}
           onPress={() => setActive(child.key) && onPress && onPress(child.key)}
         >
-          {child}
+          {cloneElement(child, { active: active === child.key })}
         </TouchableOpacity>
       ))}
     </View>
@@ -66,16 +66,26 @@ export type TabProps = {
 }
 
 const createTabBaseStyles = () => ({
-  tab: {},
+  tab: {
+    paddingBottom: 2,
+  },
+  activeTab: {
+    borderBottomWidth: 2,
+    borderColor: 'black',
+  },
 })
 
-TabBar.Tab = function Tab({ children, styles }: TabProps) {
+TabBar.Tab = function Tab({ children, active, styles }: TabProps) {
   const sheet = useMemo(
     () => mergeStyles(createTabBaseStyles(), styles),
     [styles]
   )
 
-  return <View style={sheet.tab}>{children}</View>
+  return (
+    <View style={[sheet.tab, active ? sheet.activeTab : null]}>
+      {cloneElement(children, { active })}
+    </View>
+  )
 }
 
 TabBar.Tab.createStyles = createTabBaseStyles

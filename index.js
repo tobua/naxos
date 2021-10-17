@@ -10,5 +10,6 @@ export { Input } from './component/Input'
 export { Dropdown } from './component/Dropdown'
 export { AbsoluteButton } from './component/AbsoluteButton'
 export { Intro } from './component/Intro'
+export { Avatar } from './component/Avatar'
 
 export { Color, Space, Font, configure, mergeStyles } from './style/index'

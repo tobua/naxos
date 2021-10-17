@@ -1,8 +1,12 @@
 // @flow
-import React, { Children, useState, useMemo } from 'react'
+import React, { Children, useState, useMemo, cloneElement } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Font, mergeStyles } from '..'
+import { Color, Font, Space, mergeStyles } from '..'
+
+const TextTab = ({ active, label }: { active?: boolean, label: string }) => (
+  <Text style={{ fontWeight: active ? 'bold' : 'normal' }}>{label}</Text>
+)
 
 const createBaseStyles = () => ({
   wrapper: {
@@ -11,8 +15,8 @@ const createBaseStyles = () => ({
   labels: {
     justifyContent: 'space-between',
     flexDirection: 'row',
+    marginBottom: Space.small,
   },
-  textLabel: {},
   content: {},
 })
 
@@ -35,7 +39,7 @@ export const Tabs = ({ children, labels, styles }: Props) => {
           let inner = label
 
           if (typeof label === 'string') {
-            inner = <Text style={sheet.textLabel}>{label}</Text>
+            inner = <TextTab label={label} />
           }
 
           return (
@@ -43,7 +47,7 @@ export const Tabs = ({ children, labels, styles }: Props) => {
               key={typeof label === 'string' ? label : label.key}
               onPress={() => setCurrent(index)}
             >
-              {inner}
+              {cloneElement(inner, { active: current === index })}
             </TouchableOpacity>
           )
         })}
