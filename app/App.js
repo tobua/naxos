@@ -49,7 +49,7 @@ export default () => {
               <Text>First slide.</Text>
             </Content>
           </Intro.Slide>
-          <Intro.Slide key="second" backgroundColor="blue">
+          <Intro.Slide key="second">
             <Content>
               <Text>Second slide.</Text>
             </Content>

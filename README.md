@@ -158,7 +158,7 @@ const Slides = (
         <Intro.Slide>
             <Text>First Slide</Text>
         <Intro.Slide>
-        <Intro.Slide backgroundColor="blue">
+        <Intro.Slide>
             <Text>Second Slide</Text>
         <Intro.Slide>
     </Intro>
