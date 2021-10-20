@@ -7,20 +7,28 @@ import {
   Text as RNText,
   TouchableOpacity,
 } from 'react-native'
+import { Font } from '../index'
 
 const styles = StyleSheet.create({
   text: {},
-  large: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
 })
 
 export type Props = {
   children: string,
-  large?: boolean,
+  large?: true,
+  bold?: true,
+  small?: true,
 }
 
-export const Text = ({ children, large }: Props) => (
-  <RNText style={[styles.base, large && styles.large]}>{children}</RNText>
+export const Text = ({ children, large, bold, small }: Props) => (
+  <RNText
+    style={[
+      styles.base,
+      large && Font.large,
+      bold && Font.bold,
+      small && Font.small,
+    ]}
+  >
+    {children}
+  </RNText>
 )

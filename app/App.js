@@ -92,7 +92,10 @@ export default () => {
         </TabBar>
         <Content>
           <Heading>Text</Heading>
-          <Text>This is a paragraph.</Text>
+          <Text>This is regular text.</Text>
+          <Text bold>This is bold text.</Text>
+          <Text large>This is large text.</Text>
+          <Text small>This is small text.</Text>
         </Content>
         <Content>
           <Heading>Button</Heading>
