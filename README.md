@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/tobua/naxos/raw/main/video.gif" alt="naxos Preview" width="195">
+</p>
+
 # naxos
 
 <img align="right" src="https://github.com/tobua/naxos/raw/main/logo.png" width="20%" alt="naxos" />
@@ -129,6 +133,16 @@ const simpleDropdown = (
 
 Wraps content with `Space.medium` to the side and `Space.small` for top and bottom.
 
+```jsx
+import { Content, Button } from 'naxos'
+
+const WrappedButton = (
+  <Content>
+    <Button title="Hello" onPress={() => alert('Hello World')} />
+  </Content>
+)
+```
+
 ### `Icon`
 
 ```jsx
@@ -241,4 +255,4 @@ AppRegistry.registerComponent('app', () => App)
 
 ## Development
 
-Copy plugin initially in `/app` with `npm i --no-save $(npm pack ./.. | tail -1)`.
+Initially install the plugin when in `/app` with `npm i --no-save $(npm pack ./.. | tail -1)`. Then watch and copy over changes from `/` by running `npm run watch`.

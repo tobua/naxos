@@ -96,7 +96,7 @@ export default () => {
         </Content>
         <Content>
           <Heading>Button</Heading>
-          <Button title="Click me" />
+          <Button title="Click me" onPress={() => alert('Hello World!')} />
           <Button>
             <Text>Click children</Text>
           </Button>

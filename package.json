@@ -2,9 +2,8 @@
   "name": "naxos",
   "description": "React Native UI components library.",
   "version": "0.0.0-development",
+  "repository": "github:tobua/naxos",
   "license": "MIT",
-  "main": "index.js",
-  "type": "module",
   "scripts": {
     "app": "node create-app.js",
     "watch": "cpx '{component/**/*,style/**/*,asset/**/*,index.js,package.json}' app/node_modules/naxos --watch",
@@ -13,14 +12,25 @@
     "lint": "eslint . --fix",
     "format": "prettier \"{component,style}/**/*\" --write"
   },
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "component",
+    "style",
+    "asset"
+  ],
+  "keywords": [
+    "react-native",
+    "ui"
+  ],
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@react-native-community/eslint-config": "3.0.1",
-    "babel-jest": "^27.3.0",
+    "babel-jest": "^27.3.1",
     "cpx": "^1.5.0",
     "eslint": "^8.0.1",
     "flow-bin": "^0.162.1",
-    "jest": "^27.3.0",
+    "jest": "^27.3.1",
     "metro-react-native-babel-preset": "^0.66.2",
     "prettier": "^2.4.1",
     "react": "^17.0.2",
@@ -31,37 +41,28 @@
     "semantic-release": "^18.0.0"
   },
   "prettier": {
-    "singleQuote": true,
-    "semi": false
+    "semi": false,
+    "singleQuote": true
   },
   "eslintConfig": {
     "extends": "@react-native-community",
+    "rules": {
+      "semi": 0
+    },
     "ignorePatterns": [
       ".github",
       "app"
-    ],
-    "rules": {
-      "semi": 0
-    }
+    ]
   },
   "jest": {
+    "moduleNameMapper": {
+      "naxos": "<rootDir>"
+    },
     "preset": "react-native",
     "testPathIgnorePatterns": [
       "/app/"
-    ],
-    "moduleNameMapper": {
-      "naxos": "<rootDir>"
-    }
+    ]
   },
-  "files": [
-    "component",
-    "style",
-    "asset"
-  ],
-  "keywords": [
-    "react-native",
-    "ui"
-  ],
   "engines": {
     "node": ">= 14"
   }
