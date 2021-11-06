@@ -2,16 +2,14 @@
 import React, { Children, useState, useMemo, cloneElement } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Font, Space, mergeStyles } from '..'
+import { Color, Font, Space, mergeStyles } from '../style'
 
 const TextTab = ({ active, label }: { active?: boolean, label: string }) => (
   <Text style={{ fontWeight: active ? 'bold' : 'normal' }}>{label}</Text>
 )
 
 const createBaseStyles = () => ({
-  wrapper: {
-    //
-  },
+  wrapper: {},
   labels: {
     justifyContent: 'space-between',
     flexDirection: 'row',

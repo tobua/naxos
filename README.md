@@ -23,26 +23,31 @@ npm i naxos
 
 ```jsx
 import React from 'react'
-import { View, ScrollView } from 'react-native'
+import { AppRegistry, SafeAreaView, ScrollView } from 'react-native'
 import { NavBar, TabBar, Text, Content } from 'naxos'
 
-export () =>
-    <View style={{flex: 1}}>
-        <NavBar title="naxos" />
-        <ScrollView>
-            <Content>
-                <Text large bold>React Native UI Library</Text>
-            </Content>
-        </ScrollView>
-        <TabBar>
-            <TabBar.Tab>
-                <Text>Home</Text>
-            </TabBar.Tab>
-            <TabBar.Tab>
-                <Text>Profile</Text>
-            </TabBar.Tab>
-        </TabBar>
-    </View>
+const App = () => (
+  <SafeAreaView style={{ flex: 1 }}>
+    <NavBar title="naxos" />
+    <ScrollView>
+      <Content>
+        <Text large bold>
+          React Native UI Library
+        </Text>
+      </Content>
+    </ScrollView>
+    <TabBar>
+      <TabBar.Tab key="home">
+        <Text>Home</Text>
+      </TabBar.Tab>
+      <TabBar.Tab key="profile">
+        <Text>Profile</Text>
+      </TabBar.Tab>
+    </TabBar>
+  </SafeAreaView>
+)
+
+AppRegistry.registerComponent('naxos', () => App)
 ```
 
 ## Components
@@ -53,17 +58,17 @@ export () =>
 import { NavBar, Button, Text, Avatar } from 'naxos'
 
 const Navigation = (
-    <NavBar>
-        <NavBar.Left>
-            <Button onPress={back}>Back</Button>
-        <NavBar.Left>
-        <NavBar.Middle>
-            <Text>naxos</Text>
-        <NavBar.Middle>
-        <NavBar.Right>
-            <Avatar onPress={go('Profile')} image={userImage} />
-        </NavBar.Right>
-    </NavBar>
+  <NavBar>
+    <NavBar.Left>
+      <Button onPress={back}>Back</Button>
+    </NavBar.Left>
+    <NavBar.Middle>
+      <Text>naxos</Text>
+    </NavBar.Middle>
+    <NavBar.Right>
+      <Avatar onPress={go('Profile')} image={userImage} />
+    </NavBar.Right>
+  </NavBar>
 )
 ```
 
@@ -122,10 +127,7 @@ const regularInput = <Input placeholder="Enter text..." />
 import { Dropdown } from 'naxos'
 
 const simpleDropdown = (
-  <Dropdown
-    options={['Home', 'Profile', 'About']}
-    onChange={(option) => alert(option)}
-  />
+  <Dropdown options={['Home', 'Profile', 'About']} onChange={(option) => alert(option)} />
 )
 ```
 
@@ -168,14 +170,14 @@ const customImage = <Avatar source={profileImage} />
 import { Intro, Text } from 'naxos'
 
 const Slides = (
-    <Intro skip={false}>
-        <Intro.Slide>
-            <Text>First Slide</Text>
-        <Intro.Slide>
-        <Intro.Slide>
-            <Text>Second Slide</Text>
-        <Intro.Slide>
-    </Intro>
+  <Intro skip={false} onDone={() => setDone(true)}>
+    <Intro.Slide key="first">
+      <Text>First Slide</Text>
+    </Intro.Slide>
+    <Intro.Slide key="second">
+      <Text>Second Slide</Text>
+    </Intro.Slide>
+  </Intro>
 )
 ```
 

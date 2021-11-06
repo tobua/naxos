@@ -11,7 +11,9 @@ import {
   Animated,
   Easing,
 } from 'react-native'
-import { Color, Font, Button, Content, mergeStyles, Space } from '..'
+import { Color, Font, Space, mergeStyles } from '../style'
+import { Button } from './Button'
+import { Content } from './Content'
 
 const createBaseStyles = () => ({
   wrapper: {
@@ -74,10 +76,7 @@ export const Intro = ({ children, styles, onDone }: Props) => {
       },
       onPanResponderRelease: (evt, gestureState) => {
         // Next
-        if (
-          gestureState.dx < -(windowWidth / 2) &&
-          state.index < children.length - 1
-        ) {
+        if (gestureState.dx < -(windowWidth / 2) && state.index < children.length - 1) {
           state.index++
         }
 
@@ -112,10 +111,7 @@ export const Intro = ({ children, styles, onDone }: Props) => {
         ]}
       >
         {children.map((child, index) => (
-          <View
-            key={child.key}
-            style={[sheet.slide, { left: index * windowWidth }]}
-          >
+          <View key={child.key} style={[sheet.slide, { left: index * windowWidth }]}>
             {child}
           </View>
         ))}
@@ -134,10 +130,7 @@ export const Intro = ({ children, styles, onDone }: Props) => {
             />
           ))}
         </View>
-        <Button
-          title={slideIndex === children.length - 1 ? 'Done' : 'Skip'}
-          onPress={onDone}
-        />
+        <Button title={slideIndex === children.length - 1 ? 'Done' : 'Skip'} onPress={onDone} />
       </View>
     </View>
   )
@@ -147,7 +140,7 @@ Intro.createStyles = createBaseStyles
 
 export type SlideProps = {
   children: ReactNode,
-  key: String,
+  key: string,
   styles?: StyleSheet.NamedStyles,
 }
 
@@ -156,10 +149,7 @@ const createSlideBaseStyles = () => ({
 })
 
 Intro.Slide = function Slide({ children, styles }: SlideProps) {
-  const sheet = useMemo(
-    () => mergeStyles(createSlideBaseStyles(), styles),
-    [styles]
-  )
+  const sheet = useMemo(() => mergeStyles(createSlideBaseStyles(), styles), [styles])
 
   return <View style={sheet.wrapper}>{children}</View>
 }

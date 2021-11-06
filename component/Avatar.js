@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native'
-import { Color, mergeStyles } from '..'
+import { Color, mergeStyles } from '../style'
 import avatar from '../asset/avatar.png'
 
 const createBaseStyles = () => ({

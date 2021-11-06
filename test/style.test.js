@@ -65,12 +65,7 @@ test('Memoized styles can be updated.', () => {
     colorState = useState('red')
     titleState = useState('Press me!')
     renderCount(colorState[0], titleState[0])
-    return (
-      <Button
-        title={titleState[0]}
-        styles={{ text: { color: colorState[0] } }}
-      />
-    )
+    return <Button title={titleState[0]} styles={{ text: { color: colorState[0] } }} />
   }
 
   const rendered = renderer.create(<DynamicComponent />)

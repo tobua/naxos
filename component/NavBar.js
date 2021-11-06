@@ -2,7 +2,7 @@
 import React, { Children, useState, useMemo } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Font, mergeStyles, Space } from '..'
+import { Color, Font, Space, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
   wrapper: {

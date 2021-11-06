@@ -2,7 +2,8 @@
 import React, { useMemo, useState } from 'react'
 import type { Node } from 'react'
 import { Text, TouchableOpacity, StyleSheet, View } from 'react-native'
-import { Color, Font, mergeStyles, Space, Icon } from '..'
+import { Color, Font, Space, mergeStyles } from '../style'
+import { Icon } from './Icon'
 
 const createBaseStyles = () => ({
   wrapper: {},

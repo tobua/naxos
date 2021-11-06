@@ -2,7 +2,7 @@
 import React, { Children, useState, useMemo, cloneElement } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Font, mergeStyles } from '..'
+import { Color, Font, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
   wrapper: {
@@ -76,10 +76,7 @@ const createTabBaseStyles = () => ({
 })
 
 TabBar.Tab = function Tab({ children, active, styles }: TabProps) {
-  const sheet = useMemo(
-    () => mergeStyles(createTabBaseStyles(), styles),
-    [styles]
-  )
+  const sheet = useMemo(() => mergeStyles(createTabBaseStyles(), styles), [styles])
 
   return (
     <View style={[sheet.tab, active ? sheet.activeTab : null]}>

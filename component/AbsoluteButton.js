@@ -2,7 +2,8 @@
 import React, { useMemo } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Icon, mergeStyles, Space } from '..'
+import { Color, Space, mergeStyles } from '../style'
+import { Icon } from './Icon'
 
 const getPosition = (position, space) => {
   if (position === 'inline') {

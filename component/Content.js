@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react'
 import type ReactNode from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Space, mergeStyles } from '..'
+import { Color, Space, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
   wrapper: {
