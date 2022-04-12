@@ -1,19 +1,9 @@
 // @flow
-import React, { Children, useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import type ReactNode from 'react'
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  PanResponder,
-  Dimensions,
-  Animated,
-  Easing,
-} from 'react-native'
-import { Color, Font, Space, mergeStyles } from '../style'
+import { StyleSheet, View, PanResponder, Dimensions, Animated, Easing } from 'react-native'
+import { Space, mergeStyles } from '../style'
 import { Button } from './Button'
-import { Content } from './Content'
 
 const createBaseStyles = () => ({
   wrapper: {
@@ -30,6 +20,8 @@ const createBaseStyles = () => ({
     justifyContent: 'space-between',
   },
   slide: {
+    width: '100%',
+    height: '100%',
     flex: 1,
     position: 'absolute',
     top: 0,

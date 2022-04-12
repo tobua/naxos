@@ -24,21 +24,20 @@
     "ui"
   ],
   "devDependencies": {
-    "@babel/core": "^7.16.0",
+    "@babel/core": "^7.17.9",
     "@react-native-community/eslint-config": "3.0.1",
-    "babel-jest": "^27.3.1",
+    "babel-jest": "^27.5.1",
     "cpx": "^1.5.0",
-    "eslint": "^8.2.0",
-    "flow-bin": "^0.163.0",
-    "jest": "^27.3.1",
-    "metro-react-native-babel-preset": "^0.66.2",
-    "prettier": "^2.4.1",
-    "react": "^17.0.2",
-    "react-native": "^0.66.2",
-    "react-test-renderer": "^17.0.2",
-    "recursive-copy": "^2.0.13",
-    "rimraf": "^3.0.2",
-    "semantic-release": "^18.0.0"
+    "eslint": "^8.13.0",
+    "flow-bin": "^0.175.1",
+    "jest": "^27.5.1",
+    "metro-react-native-babel-preset": "^0.70.1",
+    "prettier": "^2.6.2",
+    "react": "^18.0.0",
+    "react-native": "^0.68.0",
+    "react-test-renderer": "^18.0.0",
+    "recursive-copy": "^2.0.14",
+    "rimraf": "^3.0.2"
   },
   "prettier": {
     "semi": false,

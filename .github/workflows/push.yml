@@ -3,28 +3,15 @@ name: push
 on:
   push:
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      type:
-        description: Manually trigger workflow run?
-        default: regular
-        required: true
 
 jobs:
-  test:
+  test-release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm install
       - name: Test 📱
         run: npm test
-  release:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
       - uses: tobua/release-npm-action@v1
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MANUAL_TRIGGER: ${{ github.event.inputs.type }}
