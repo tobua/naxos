@@ -1,8 +1,7 @@
 // @flow
 import React, { useMemo } from 'react'
-import type ReactNode from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Space, mergeStyles } from '../style'
+import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native'
+import { Space, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
   wrapper: {
@@ -16,12 +15,13 @@ const createBaseStyles = () => ({
 export type Props = {
   children?: ReactNode,
   styles?: StyleSheet.NamedStyles,
+  style?: StyleProp<ViewStyle>,
 }
 
-export const Content = ({ children, styles }: Props) => {
+export const Content = ({ children, styles, style }: Props) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
 
-  return <View style={sheet.wrapper}>{children}</View>
+  return <View style={[sheet.wrapper, style]}>{children}</View>
 }
 
 Content.createStyles = createBaseStyles

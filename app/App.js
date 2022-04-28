@@ -45,19 +45,40 @@ export default () => {
       <SafeAreaView style={styles.screen}>
         <Intro onDone={() => showIntro(false)}>
           <Intro.Slide key="first">
-            <Content>
-              <Text>First slide.</Text>
-            </Content>
+            <View style={{alignItems: 'center'}}>
+              <Content
+                style={{
+                  backgroundColor: 'red',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  height: 100,
+                }}>
+                <View
+                  style={{
+                    width: 50,
+                    height: 50,
+                    backgroundColor: 'yellow',
+                    borderRadius: 25,
+                  }}
+                />
+                <Text>First slide</Text>
+              </Content>
+            </View>
           </Intro.Slide>
           <Intro.Slide key="second">
-            <Content>
-              <Text>Second slide.</Text>
-            </Content>
+            <View
+              style={{
+                height: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text>Second slide centered</Text>
+            </View>
           </Intro.Slide>
           <Intro.Slide key="third">
-            <Content>
-              <Text>Third slide.</Text>
-            </Content>
+            <View style={{alignItems: 'center'}}>
+              <Text>Third one centered horizontally</Text>
+            </View>
           </Intro.Slide>
         </Intro>
       </SafeAreaView>

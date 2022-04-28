@@ -20,9 +20,8 @@ const createBaseStyles = () => ({
     justifyContent: 'space-between',
   },
   slide: {
-    width: '100%',
+    width: Dimensions.get('window').width,
     height: '100%',
-    flex: 1,
     position: 'absolute',
     top: 0,
   },
