@@ -1,4 +1,3 @@
-// @flow
 export { NavBar } from './component/NavBar'
 export { TabBar } from './component/TabBar'
 export { Button } from './component/Button'

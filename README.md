@@ -59,18 +59,16 @@ import { NavBar, Button, Text, Avatar } from 'naxos'
 
 const Navigation = (
   <NavBar>
-    <NavBar.Left>
-      <Button onPress={back}>Back</Button>
-    </NavBar.Left>
-    <NavBar.Middle>
-      <Text>naxos</Text>
-    </NavBar.Middle>
-    <NavBar.Right>
-      <Avatar onPress={go('Profile')} image={userImage} />
-    </NavBar.Right>
+    <Button key="left" onPress={back}>
+      Back
+    </Button>
+    <Text key="middle">naxos</Text>
+    <Avatar key="right" onPress={go('Profile')} image={userImage} />
   </NavBar>
 )
 ```
+
+The `key` property is required on the root child to indicate the desired position. It can also be placed on a `Fragment` or a `View` wrapping multiple other elements.
 
 ### `TabBar`
 
@@ -254,7 +252,3 @@ configure({
 
 AppRegistry.registerComponent('app', () => App)
 ```
-
-## Development
-
-Initially install the plugin when in `/app` with `npm i --no-save $(npm pack ./.. | tail -1)`. Then watch and copy over changes from `/` by running `npm run watch`.

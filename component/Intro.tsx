@@ -1,7 +1,13 @@
-// @flow
-import React, { useState, useMemo, useRef } from 'react'
-import type ReactNode from 'react'
-import { StyleSheet, View, PanResponder, Dimensions, Animated, Easing } from 'react-native'
+import React, { useState, useMemo, useRef, ReactNode } from 'react'
+import {
+  View,
+  PanResponder,
+  Dimensions,
+  Animated,
+  Easing,
+  ViewStyle,
+  StyleProp,
+} from 'react-native'
 import { Space, mergeStyles } from '../style'
 import { Button } from './Button'
 
@@ -36,15 +42,27 @@ const createBaseStyles = () => ({
   },
 })
 
+const backgroundStyle = (active: boolean) => ({
+  backgroundColor: active ? 'black' : 'lightgray',
+})
+
 const windowWidth = Dimensions.get('window').width
 
-export type Props = {
-  children: ReactNode,
-  styles?: StyleSheet.NamedStyles,
-  onDone?: () => void,
+interface Props {
+  children: ReactNode | ReactNode[]
+  styles?: {
+    wrapper?: StyleProp<ViewStyle>
+    slides?: StyleProp<ViewStyle>
+    slide?: StyleProp<ViewStyle>
+    bottom?: StyleProp<ViewStyle>
+    dots?: StyleProp<ViewStyle>
+    dot?: StyleProp<ViewStyle>
+  }
+  style?: StyleProp<ViewStyle>
+  onDone?: () => void
 }
 
-export const Intro = ({ children, styles, onDone }: Props) => {
+export const Intro = ({ children, styles, style, onDone }: Props) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const state = useMemo(
     () => ({
@@ -52,22 +70,23 @@ export const Intro = ({ children, styles, onDone }: Props) => {
     }),
     []
   )
-  const [active, setActive] = useState(children[0].key)
   const [slideIndex, setSlideIndex] = useState(0)
   const position = useRef(new Animated.Value(0)).current
+  const childrenArray = Array.isArray(children) ? children : [children]
+  const childrenCount = childrenArray.length
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderTerminationRequest: (evt, gestureState) => true,
-      onPanResponderGrant: (evt, gestureState) => {
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderTerminationRequest: () => true,
+      onPanResponderGrant: (_, gestureState) => {
         position.setValue(gestureState.dx + state.index * windowWidth * -1)
       },
-      onPanResponderMove: (evt, gestureState) => {
+      onPanResponderMove: (_, gestureState) => {
         position.setValue(gestureState.dx + state.index * windowWidth * -1)
       },
-      onPanResponderRelease: (evt, gestureState) => {
+      onPanResponderRelease: (_, gestureState) => {
         // Next
-        if (gestureState.dx < -(windowWidth / 2) && state.index < children.length - 1) {
+        if (gestureState.dx < -(windowWidth / 2) && state.index < childrenCount - 1) {
           state.index++
         }
 
@@ -90,38 +109,30 @@ export const Intro = ({ children, styles, onDone }: Props) => {
   ).current
 
   return (
-    <View style={sheet.wrapper}>
+    <View style={[sheet.wrapper, style]}>
       <Animated.View
         {...panResponder.panHandlers}
         style={[
           sheet.slides,
           {
-            width: children.length * windowWidth,
+            width: childrenCount * windowWidth,
             transform: [{ translateX: position }],
           },
         ]}
       >
-        {children.map((child, index) => (
-          <View key={child.key} style={[sheet.slide, { left: index * windowWidth }]}>
+        {childrenArray.map((child: any, index) => (
+          <View key={child?.key ?? index} style={[sheet.slide, { left: index * windowWidth }]}>
             {child}
           </View>
         ))}
       </Animated.View>
       <View style={sheet.bottom}>
         <View style={sheet.dots}>
-          {Array.from(Array(children.length)).map((_, index) => (
-            <View
-              key={index}
-              style={[
-                sheet.dot,
-                {
-                  backgroundColor: slideIndex === index ? 'black' : 'lightgray',
-                },
-              ]}
-            />
+          {Array.from(Array(childrenCount)).map((_, index) => (
+            <View key={index} style={[sheet.dot, backgroundStyle(slideIndex === index)]} />
           ))}
         </View>
-        <Button title={slideIndex === children.length - 1 ? 'Done' : 'Skip'} onPress={onDone} />
+        <Button title={slideIndex === childrenCount - 1 ? 'Done' : 'Skip'} onPress={onDone} />
       </View>
     </View>
   )
@@ -130,19 +141,24 @@ export const Intro = ({ children, styles, onDone }: Props) => {
 Intro.createStyles = createBaseStyles
 
 export type SlideProps = {
-  children: ReactNode,
-  key: string,
-  styles?: StyleSheet.NamedStyles,
+  children: ReactNode
+  key: string
+  styles?: {
+    wrapper: StyleProp<ViewStyle>
+  }
+  style?: StyleProp<ViewStyle>
 }
 
 const createSlideBaseStyles = () => ({
   wrapper: {},
 })
 
-Intro.Slide = function Slide({ children, styles }: SlideProps) {
+const Slide = ({ children, styles, style }: SlideProps) => {
   const sheet = useMemo(() => mergeStyles(createSlideBaseStyles(), styles), [styles])
 
-  return <View style={sheet.wrapper}>{children}</View>
+  return <View style={[sheet.wrapper, style]}>{children}</View>
 }
 
-Intro.Slide.createStyles = createSlideBaseStyles
+Slide.createStyles = createSlideBaseStyles
+
+Intro.Slide = Slide

@@ -1,4 +1,3 @@
-// @flow
 import { StyleSheet } from 'react-native'
 
 export const Color = {
@@ -37,7 +36,13 @@ export const Font = {
   },
 }
 
-export const configure = (inputs = {}) => {
+type ConfigureInput = {
+  Color?: Partial<typeof Color>
+  Space?: Partial<typeof Space>
+  Font?: Partial<typeof Font>
+}
+
+export const configure = (inputs: ConfigureInput = {}) => {
   if (inputs.Color) {
     Object.assign(Color, inputs.Color)
   }
@@ -49,7 +54,7 @@ export const configure = (inputs = {}) => {
   }
 }
 
-export const mergeStyles = (base, user) => {
+export const mergeStyles = (base: any, user: any) => {
   // Check if styles are valid.
   const baseStyles = StyleSheet.create(base)
 

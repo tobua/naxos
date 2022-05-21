@@ -6,64 +6,113 @@
   "license": "MIT",
   "scripts": {
     "app": "node create-app.js",
-    "watch": "cpx '{component/**/*,style/**/*,asset/**/*,index.js,package.json}' app/node_modules/naxos --watch",
-    "install-to-app": "npm i --no-save $(npm pack . | tail -1)  --prefix app",
+    "app:install": "npm i --no-save $(npm pack . | tail -1)  --prefix app",
+    "build": "esbuild index.tsx --outdir=dist --bundle --minify --format=esm --sourcemap --external:react-native --external:react --loader:.png=dataurl && npm run build:types",
+    "build:types": "tsc --project tsconfig-build.json",
+    "build:watch": "esbuild index.tsx --watch --outdir=dist --bundle --format=esm --sourcemap --external:react-native --external:react --loader:.png=dataurl",
+    "copy": "cpx 'dist/**/*' app/node_modules/naxos/dist --watch",
+    "format": "prettier \"{,!(app|dist)/**/}*.{ts,tsx}\" --write",
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "test": "jest",
-    "lint": "eslint . --fix",
-    "format": "prettier \"{component,style}/**/*\" --write"
+    "test:watch": "jest --watchAll",
+    "watch": "concurrently --kill-others \"npm run build:watch\" \"npm run copy\""
+  },
+  "peerDependencies": {
+    "react": "^18.1.0",
+    "react-native": "^0.68.2"
   },
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "types": "dist/index.d.ts",
   "files": [
-    "component",
-    "style",
-    "asset"
+    "dist"
   ],
   "keywords": [
     "react-native",
     "ui"
   ],
   "devDependencies": {
-    "@babel/core": "^7.17.9",
-    "@react-native-community/eslint-config": "3.0.1",
-    "babel-jest": "^28.0.2",
+    "@babel/core": "^7.18.0",
+    "@babel/runtime": "^7.18.0",
+    "@react-native-community/eslint-config": "3.0.2",
+    "@types/jest": "^27.5.1",
+    "@types/react": "^18.0.9",
+    "@types/react-native": "^0.67.7",
+    "@types/react-test-renderer": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "babel-jest": "^28.1.0",
+    "concurrently": "^7.2.0",
     "cpx": "^1.5.0",
-    "eslint": "^8.14.0",
-    "flow-bin": "^0.176.3",
+    "esbuild": "^0.14.39",
+    "eslint": "^8.16.0",
+    "eslint-plugin-flowtype": "^8.0.3",
     "jest": "^27.5.1",
-    "metro-react-native-babel-preset": "^0.70.2",
+    "metro-react-native-babel-preset": "^0.70.3",
     "prettier": "^2.6.2",
     "react": "^18.1.0",
-    "react-native": "^0.68.1",
+    "react-native": "^0.68.2",
     "react-test-renderer": "^18.1.0",
     "recursive-copy": "^2.0.14",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.4"
   },
   "prettier": {
+    "printWidth": 100,
     "semi": false,
-    "singleQuote": true,
-    "printWidth": 100
+    "singleQuote": true
   },
   "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
     "extends": "@react-native-community",
     "rules": {
       "semi": 0
     },
+    "overrides": [
+      {
+        "files": [
+          "*.ts",
+          "*.tsx"
+        ],
+        "rules": {
+          "no-shadow": "off",
+          "no-undef": "off",
+          "@typescript-eslint/no-shadow": [
+            "error"
+          ]
+        }
+      }
+    ],
     "ignorePatterns": [
-      ".github",
+      "dist",
       "app"
-    ]
+    ],
+    "root": true
   },
   "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "moduleNameMapper": {
+      "react-dom": "react-native",
       "naxos": "<rootDir>"
     },
     "preset": "react-native",
     "testPathIgnorePatterns": [
       "/app/"
-    ]
-  },
-  "engines": {
-    "node": ">= 14"
+    ],
+    "transformIgnorePatterns": []
   }
 }

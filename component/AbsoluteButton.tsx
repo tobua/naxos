@@ -1,11 +1,11 @@
-// @flow
 import React, { useMemo } from 'react'
-import type ReactNode from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Color, Space, mergeStyles } from '../style'
+import { StyleProp, View, TouchableOpacity, ViewStyle } from 'react-native'
+import { Space, mergeStyles } from '../style'
 import { Icon } from './Icon'
 
-const getPosition = (position, space) => {
+type Position = 'inline' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+
+const getPosition = (position: Position, space?: number) => {
   if (position === 'inline') {
     return null
   }
@@ -28,36 +28,31 @@ const createBaseStyles = () => ({
   },
 })
 
-export type Props = {
-  children?: ReactNode,
-  onPress: () => void,
-  type: 'back' | 'close' | 'add',
-  position:
-    | 'inline'
-    | 'top-left'
-    | 'top-right'
-    | 'bottom-left'
-    | 'bottom-right',
-  space?: number,
-  styles?: StyleSheet.NamedStyles,
+interface Props {
+  onPress: () => void
+  type: 'back' | 'close' | 'add'
+  position: Position
+  space?: number
+  styles?: {
+    touchable?: StyleProp<ViewStyle>
+    view?: StyleProp<ViewStyle>
+  }
+  style?: StyleProp<ViewStyle>
 }
 
 export const AbsoluteButton = ({
-  children,
   onPress,
   type,
   position,
   space = Space.medium,
   styles,
+  style,
 }: Props) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
 
   return (
-    <TouchableOpacity
-      style={[sheet.touchable, getPosition(position, space)]}
-      onPress={onPress}
-    >
-      <View style={sheet.view}>
+    <TouchableOpacity style={[sheet.touchable, getPosition(position, space)]} onPress={onPress}>
+      <View style={[sheet.view, style]}>
         <Icon name={type} />
       </View>
     </TouchableOpacity>

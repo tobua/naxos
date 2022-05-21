@@ -1,8 +1,6 @@
-// @flow
 import React, { useMemo, useState } from 'react'
-import type { Node } from 'react'
-import { Text, TouchableOpacity, StyleSheet, View } from 'react-native'
-import { Color, Font, Space, mergeStyles } from '../style'
+import { Text, TouchableOpacity, View, ViewStyle, TextStyle, StyleProp } from 'react-native'
+import { Font, Space, mergeStyles } from '../style'
 import { Icon } from './Icon'
 
 const createBaseStyles = () => ({
@@ -26,49 +24,47 @@ const createBaseStyles = () => ({
   },
 })
 
-export type Props = {
-  options: string[],
-  initial?: string,
-  onChange: (string) => void,
-  styles?: StyleSheet.NamedStyles,
+interface Props {
+  options: string[]
+  initial?: string
+  onChange: (value: string) => void
+  styles?: {
+    touchable?: StyleProp<ViewStyle>
+    wrapper?: StyleProp<ViewStyle>
+    main?: StyleProp<ViewStyle>
+    currentText?: StyleProp<TextStyle>
+    open?: StyleProp<ViewStyle>
+    option?: StyleProp<ViewStyle>
+    activeOption?: StyleProp<TextStyle>
+  }
+  style?: StyleProp<ViewStyle>
 }
 
-export const Dropdown: (Props) => Node = ({
-  options,
-  initial = options[0],
-  onChange,
-  styles,
-}) => {
+export const Dropdown = ({ options, initial = options[0], onChange, styles, style }: Props) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const [current, setCurrent] = useState(initial)
   const [open, setOpen] = useState(false)
 
   return (
-    <TouchableOpacity onPress={() => !open && setOpen(true)}>
-      <View style={sheet.wrapper}>
+    <TouchableOpacity style={sheet.touchable} onPress={() => !open && setOpen(true)}>
+      <View style={[sheet.wrapper, style]}>
         <View style={sheet.main}>
           <Text style={sheet.currentText}>{current}</Text>
-          <Icon
-            name="pointer"
-            direction={open ? 'top' : 'bottom'}
-            size="small"
-          />
+          <Icon name="pointer" direction={open ? 'top' : 'bottom'} size="small" />
         </View>
         {open && (
           <View style={sheet.open}>
             {options.map((option) => (
               <TouchableOpacity
                 key={option}
-                onPress={() =>
-                  setCurrent(option) || setOpen(false) || onChange(option)
-                }
+                onPress={() => {
+                  setCurrent(option)
+                  setOpen(false)
+                  onChange(option)
+                }}
               >
                 <View style={sheet.option}>
-                  <Text
-                    style={[current === option ? sheet.activeOption : null]}
-                  >
-                    {option}
-                  </Text>
+                  <Text style={[current === option ? sheet.activeOption : null]}>{option}</Text>
                 </View>
               </TouchableOpacity>
             ))}

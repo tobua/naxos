@@ -1,6 +1,4 @@
-// @flow
 import React, { useState } from 'react'
-import { View } from 'react-native'
 import renderer, { act } from 'react-test-renderer'
 import { Button, Color, configure } from 'naxos'
 
@@ -28,7 +26,7 @@ test('Can access and configure style values.', () => {
 test('Button includes color from styles.', () => {
   const rendered = renderer.create(<Button title="Press me!" />)
   const tree = rendered.toJSON()
-
+  // @ts-ignore
   expect(tree.children[0].children[0].props.style.color).toEqual(interactColor)
 })
 
@@ -37,7 +35,7 @@ test('Button styles can be modified through configure.', () => {
 
   const rendered = renderer.create(<Button title="Press me!" />)
   const tree = rendered.toJSON()
-
+  // @ts-ignore
   expect(tree.children[0].children[0].props.style.color).toEqual('red')
 
   configure({ Color: { interact: interactColor } })
@@ -52,13 +50,13 @@ test('Button styles can modified through styles prop.', () => {
     <Button title="Press me!" styles={{ text: { color: highlightColor } }} />
   )
   const tree = rendered.toJSON()
-
+  // @ts-ignore
   expect(tree.children[0].children[0].props.style.color).toEqual(highlightColor)
 })
 
 test('Memoized styles can be updated.', () => {
-  let colorState
-  let titleState
+  let colorState: [string, React.Dispatch<React.SetStateAction<string>>] | null = null
+  let titleState: [string, React.Dispatch<React.SetStateAction<string>>]
   const renderCount = jest.fn()
 
   const DynamicComponent = () => {
@@ -73,17 +71,21 @@ test('Memoized styles can be updated.', () => {
   let tree = rendered.toJSON()
 
   expect(colorState).toBeDefined()
+  // @ts-ignore
   expect(tree.children[0].children[0].props.style.color).toEqual('red')
   expect(renderCount.mock.calls.length).toBe(1)
 
   act(() => {
-    colorState[1]('blue')
+    if (colorState) {
+      colorState[1]('blue')
+    }
   })
 
   tree = rendered.toJSON()
-
+  // @ts-ignore
   expect(tree.children[0].children[0].props.style.color).toEqual('blue')
   expect(renderCount.mock.calls.length).toBe(2)
+  // @ts-ignore
   expect(tree.children[0].children[0].children[0]).toBe('Press me!')
 
   act(() => {
@@ -91,8 +93,9 @@ test('Memoized styles can be updated.', () => {
   })
 
   tree = rendered.toJSON()
-
+  // @ts-ignore
   expect(tree.children[0].children[0].props.style.color).toEqual('blue')
   expect(renderCount.mock.calls.length).toBe(3)
+  // @ts-ignore
   expect(tree.children[0].children[0].children[0]).toBe('Press again!')
 })

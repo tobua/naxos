@@ -1,7 +1,5 @@
-// @flow
-import React, { Children, useState, useMemo } from 'react'
-import type ReactNode from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { ReactNode, useMemo } from 'react'
+import { View, Text, ViewStyle, StyleProp, TextStyle } from 'react-native'
 import { Color, Font, Space, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
@@ -30,58 +28,52 @@ const createBaseStyles = () => ({
   },
 })
 
-export type Props = {
-  children: ReactNode,
-  title?: string,
-  styles?: StyleSheet.NamedStyles,
+interface Props {
+  children?: ReactNode | ReactNode[]
+  title?: string
+  styles?: {
+    wrapper?: StyleProp<ViewStyle>
+    title?: StyleProp<TextStyle>
+    left?: StyleProp<ViewStyle>
+    middle?: StyleProp<ViewStyle>
+    right?: StyleProp<ViewStyle>
+  }
+  style?: StyleProp<ViewStyle>
 }
 
-const getChild = (children, Component) => {
+const getChild = (children: any, place: 'left' | 'middle' | 'right') => {
   if (!children) {
     return null
   }
 
-  // TODO will name comparison also work with minification?
   if (!Array.isArray(children)) {
-    if (children.type.name === Component.name) {
+    if (children.key === place) {
       return children
     } else {
       return null
     }
   }
 
-  return children.find((child) => child.type.name === Component.name)
+  return children.find((child) => child.key === place)
 }
 
-export const NavBar = ({ children, title, styles }: Props) => {
+export const NavBar = ({ children, title, styles, style }: Props) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
-  let Left = getChild(children, NavBar.Left)
-  let Middle = getChild(children, NavBar.Middle)
-  let Right = getChild(children, NavBar.Right)
+  let Left = getChild(children, 'left')
+  let Middle = getChild(children, 'middle')
+  let Right = getChild(children, 'right')
 
   if (!Middle) {
     Middle = <Text style={sheet.title}>{title}</Text>
   }
 
   return (
-    <View style={sheet.wrapper}>
+    <View style={[sheet.wrapper, style]}>
       <View style={sheet.left}>{Left}</View>
       <View style={sheet.middle}>{Middle}</View>
       <View style={sheet.right}>{Right}</View>
     </View>
   )
-}
-
-NavBar.Left = function Left({ children }) {
-  return children
-}
-
-NavBar.Middle = function Middle({ children }) {
-  return children
-}
-
-NavBar.Right = function Right({ children }) {
-  return children
 }
 
 NavBar.createStyles = createBaseStyles

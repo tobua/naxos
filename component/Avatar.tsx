@@ -1,8 +1,6 @@
-// @flow
 import React, { useMemo } from 'react'
-import type ReactNode from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native'
-import { Color, mergeStyles } from '../style'
+import { StyleProp, Image, ImageStyle, ImageSourcePropType } from 'react-native'
+import { mergeStyles } from '../style'
 import avatar from '../asset/avatar.png'
 
 const createBaseStyles = () => ({
@@ -27,17 +25,21 @@ const createBaseStyles = () => ({
   },
 })
 
-export type Props = {
-  size?: 'small' | 'large',
-  source?: string,
-  styles?: StyleSheet.NamedStyles,
+interface Props {
+  size?: 'small' | 'large' | 'medium'
+  source?: ImageSourcePropType | string
+  styles?: {
+    image: StyleProp<ImageStyle>
+  }
+  style?: StyleProp<ImageStyle>
 }
 
-export const Avatar = ({ size = 'medium', source, styles }: Props) => {
+export const Avatar = ({ size = 'medium', source, styles, style }: Props) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const icon = source || avatar
+  const image = typeof icon === 'string' ? { uri: icon } : icon
 
-  return <Image style={[sheet.image, sheet[size]]} source={icon} />
+  return <Image style={[sheet.image, sheet[size], style]} source={image} />
 }
 
 Avatar.createStyles = createBaseStyles

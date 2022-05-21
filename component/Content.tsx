@@ -1,6 +1,5 @@
-// @flow
-import React, { useMemo } from 'react'
-import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native'
+import React, { useMemo, ReactNode } from 'react'
+import { View, StyleProp, ViewStyle } from 'react-native'
 import { Space, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
@@ -12,10 +11,12 @@ const createBaseStyles = () => ({
   },
 })
 
-export type Props = {
-  children?: ReactNode,
-  styles?: StyleSheet.NamedStyles,
-  style?: StyleProp<ViewStyle>,
+interface Props {
+  children?: ReactNode
+  styles?: {
+    wrapper: StyleProp<ViewStyle>
+  }
+  style?: StyleProp<ViewStyle>
 }
 
 export const Content = ({ children, styles, style }: Props) => {

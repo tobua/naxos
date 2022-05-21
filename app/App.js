@@ -1,6 +1,5 @@
-// @flow
-import React, {useState} from 'react';
-import {StyleSheet, View, SafeAreaView, ScrollView} from 'react-native';
+import React, { useState, Fragment } from 'react'
+import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native'
 import {
   NavBar,
   TabBar,
@@ -17,72 +16,80 @@ import {
   Intro,
   Avatar,
   Font,
-} from 'naxos';
+} from 'naxos'
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-});
+  firstSlideWrapper: {
+    backgroundColor: 'red',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 100,
+  },
+  firstSlideView: {
+    width: 50,
+    height: 50,
+    backgroundColor: 'yellow',
+    borderRadius: 25,
+  },
+  secondSlideView: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  center: { alignItems: 'center' },
+  iconGrid: { flexDirection: 'row' },
+  iconSpace: { marginRight: 10 },
+  absoluteButton: {
+    height: 150,
+    position: 'relative',
+    borderWidth: 1,
+    borderRadius: Space.small,
+  },
+})
 
-const Heading = ({children}) => (
-  <View style={{marginBottom: Space.small}}>
+const Heading = ({ children }) => (
+  <View style={{ marginBottom: Space.small }}>
     <Text large>{children}</Text>
   </View>
-);
+)
 
-const Tab = ({label, active}) => (
+const Tab = ({ label, active }) => (
   <TabBar.Tab>
     <Text bold={active}>{label}</Text>
   </TabBar.Tab>
-);
+)
 
 export default () => {
-  const [showInto, showIntro] = useState(false);
+  const [showInto, showIntro] = useState(false)
 
   if (showInto) {
     return (
       <SafeAreaView style={styles.screen}>
         <Intro onDone={() => showIntro(false)}>
           <Intro.Slide key="first">
-            <View style={{alignItems: 'center'}}>
-              <Content
-                style={{
-                  backgroundColor: 'red',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  height: 100,
-                }}>
-                <View
-                  style={{
-                    width: 50,
-                    height: 50,
-                    backgroundColor: 'yellow',
-                    borderRadius: 25,
-                  }}
-                />
+            <View style={styles.center}>
+              <Content style={styles.firstSlideWrapper}>
+                <View style={styles.firstSlideView} />
                 <Text>First slide</Text>
               </Content>
             </View>
           </Intro.Slide>
           <Intro.Slide key="second">
-            <View
-              style={{
-                height: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
+            <View style={styles.secondSlideView}>
               <Text>Second slide centered</Text>
             </View>
           </Intro.Slide>
           <Intro.Slide key="third">
-            <View style={{alignItems: 'center'}}>
+            <View style={styles.center}>
               <Text>Third one centered horizontally</Text>
             </View>
           </Intro.Slide>
         </Intro>
       </SafeAreaView>
-    );
+    )
   }
 
   return (
@@ -93,20 +100,18 @@ export default () => {
         </Content>
         <NavBar title="naxos" />
         <NavBar>
-          <NavBar.Left>
-            <Icon name="pointer" direction="left" />
-          </NavBar.Left>
-          <NavBar.Middle>
-            <Text>Hello</Text>
-          </NavBar.Middle>
-          <NavBar.Right>
+          <Icon key="left" name="pointer" direction="left" />
+          <Fragment key="middle">
+            <Text key="middle">Hello</Text>
+          </Fragment>
+          <View key="right">
             <Icon name="menu" />
-          </NavBar.Right>
+          </View>
         </NavBar>
         <Content>
           <Heading>TabBar</Heading>
         </Content>
-        <TabBar onPress={key => console.log(key)}>
+        <TabBar onPress={(key) => console.log(key)}>
           <Tab key="home" label="Home" />
           <Tab key="trending" label="Trending" />
           <Tab key="about" label="About" />
@@ -127,10 +132,10 @@ export default () => {
         </Content>
         <Content>
           <Heading>Icon</Heading>
-          <View style={{flexDirection: 'row', gap: 20}}>
-            <Icon name="find" />
-            <Icon name="find" size="small" />
-            <Icon name="find" size="large" />
+          <View style={styles.iconGrid}>
+            <Icon name="find" style={styles.iconSpace} />
+            <Icon name="find" size="small" style={styles.iconSpace} />
+            <Icon name="find" size="large" style={styles.iconSpace} />
             <Icon name="find" color={Color.highlight} />
           </View>
         </Content>
@@ -142,7 +147,7 @@ export default () => {
           <Heading>Dropdown</Heading>
           <Dropdown
             options={['Home', 'Profile', 'About']}
-            onChange={() => {}}
+            onChange={(value) => console.log(`Value ${value} selected.`)}
           />
         </Content>
         <Content>
@@ -153,8 +158,8 @@ export default () => {
           <Heading>Tabs</Heading>
           <Tabs labels={['Home', 'Profile', 'About']}>
             <Text>Home Content</Text>
-            <Text>Profile Content</Text>
-            <Text>About Content</Text>
+            <Text style={Font.regular}>Profile Content</Text>
+            <Text style={Font.small}>About Content</Text>
           </Tabs>
         </Content>
         <Content>
@@ -163,28 +168,14 @@ export default () => {
         </Content>
         <Content>
           <Heading>AbsoluteButton</Heading>
-          <View
-            style={{
-              height: 150,
-              position: 'relative',
-              borderWidth: 1,
-              borderRadius: Space.small,
-            }}>
+          <View style={styles.absoluteButton}>
             <AbsoluteButton type="close" position="top-left" />
-            <AbsoluteButton
-              type="close"
-              position="top-right"
-              space={Space.small}
-            />
+            <AbsoluteButton type="close" position="top-right" space={Space.small} />
             <AbsoluteButton type="pointer" position="bottom-left" />
-            <AbsoluteButton
-              type="close"
-              position="bottom-right"
-              space={Space.tiny}
-            />
+            <AbsoluteButton type="close" position="bottom-right" space={Space.tiny} />
           </View>
         </Content>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
