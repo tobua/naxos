@@ -47,6 +47,7 @@ const backgroundStyle = (active: boolean) => ({
 })
 
 const windowWidth = Dimensions.get('window').width
+const switchSlideThreshold = windowWidth / 3
 
 interface Props {
   children: ReactNode | ReactNode[]
@@ -86,12 +87,12 @@ export const Intro = ({ children, styles, style, onDone }: Props) => {
       },
       onPanResponderRelease: (_, gestureState) => {
         // Next
-        if (gestureState.dx < -(windowWidth / 2) && state.index < childrenCount - 1) {
+        if (gestureState.dx < -switchSlideThreshold && state.index < childrenCount - 1) {
           state.index++
         }
 
         // Previous
-        if (gestureState.dx > windowWidth / 2 && state.index > 0) {
+        if (gestureState.dx > switchSlideThreshold && state.index > 0) {
           state.index--
         }
 
