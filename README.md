@@ -6,6 +6,9 @@
 
 <img align="right" src="https://github.com/tobua/naxos/raw/main/logo.png" width="20%" alt="naxos" />
 
+[![npm](https://img.shields.io/npm/v/naxos)](https://npmjs.com/naxos)
+[![codesandbox](https://img.shields.io/badge/demo-codesandbox-yellow)](https://codesandbox.io/s/naxos-web-ypb2ny)
+
 React Native UI components library.
 
 - NavBar, TabBar

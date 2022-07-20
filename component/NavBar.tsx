@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from 'react'
-import { View, Text, ViewStyle, StyleProp, TextStyle } from 'react-native'
+import { View, Text, ViewStyle, StyleProp, TextStyle, ViewProps } from 'react-native'
 import { Color, Font, Space, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
@@ -57,7 +57,7 @@ const getChild = (children: any, place: 'left' | 'middle' | 'right') => {
   return children.find((child) => child.key === place)
 }
 
-export const NavBar = ({ children, title, styles, style }: Props) => {
+export const NavBar = ({ children, title, styles, style, ...props }: Props & ViewProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   let Left = getChild(children, 'left')
   let Middle = getChild(children, 'middle')
@@ -68,7 +68,7 @@ export const NavBar = ({ children, title, styles, style }: Props) => {
   }
 
   return (
-    <View style={[sheet.wrapper, style]}>
+    <View style={[sheet.wrapper, style]} {...props}>
       <View style={sheet.left}>{Left}</View>
       <View style={sheet.middle}>{Middle}</View>
       <View style={sheet.right}>{Right}</View>

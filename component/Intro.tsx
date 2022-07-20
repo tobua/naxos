@@ -7,6 +7,7 @@ import {
   Easing,
   ViewStyle,
   StyleProp,
+  ViewProps,
 } from 'react-native'
 import { Space, mergeStyles } from '../style'
 import { Button } from './Button'
@@ -63,7 +64,7 @@ interface Props {
   onDone?: () => void
 }
 
-export const Intro = ({ children, styles, style, onDone }: Props) => {
+export const Intro = ({ children, styles, style, onDone, ...props }: Props & ViewProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const state = useMemo(
     () => ({
@@ -110,7 +111,7 @@ export const Intro = ({ children, styles, style, onDone }: Props) => {
   ).current
 
   return (
-    <View style={[sheet.wrapper, style]}>
+    <View style={[sheet.wrapper, style]} {...props}>
       <Animated.View
         {...panResponder.panHandlers}
         style={[
@@ -154,10 +155,14 @@ const createSlideBaseStyles = () => ({
   wrapper: {},
 })
 
-const Slide = ({ children, styles, style }: SlideProps) => {
+const Slide = ({ children, styles, style, ...props }: SlideProps & ViewProps) => {
   const sheet = useMemo(() => mergeStyles(createSlideBaseStyles(), styles), [styles])
 
-  return <View style={[sheet.wrapper, style]}>{children}</View>
+  return (
+    <View style={[sheet.wrapper, style]} {...props}>
+      {children}
+    </View>
+  )
 }
 
 Slide.createStyles = createSlideBaseStyles

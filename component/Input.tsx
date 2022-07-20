@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { StyleProp, TextInput, ViewStyle } from 'react-native'
+import { StyleProp, TextInput, ViewStyle, TextInputProps } from 'react-native'
 import { mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
@@ -11,7 +11,7 @@ export type Props = {
   style?: StyleProp<ViewStyle>
 }
 
-export const Input = ({ styles, style, ...props }: Props) => {
+export const Input = ({ styles, style, ...props }: Props & TextInputProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
 
   return <TextInput style={[sheet.input, style]} {...props} />

@@ -13,11 +13,12 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "declaration": true,
-    "noEmit": true,
     "outDir": "dist",
+    "emitDeclarationOnly": true,
     "paths": {
       "naxos": ["."]
     }
   },
+  "include": ["index.tsx", "global.d.ts"],
   "exclude": ["node_modules"]
 }

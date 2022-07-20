@@ -1,5 +1,13 @@
 import React, { useMemo, useState } from 'react'
-import { Text, TouchableOpacity, View, ViewStyle, TextStyle, StyleProp } from 'react-native'
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+  TextStyle,
+  StyleProp,
+  TouchableOpacityProps,
+} from 'react-native'
 import { Font, Space, mergeStyles } from '../style'
 import { Icon } from './Icon'
 
@@ -40,13 +48,20 @@ interface Props {
   style?: StyleProp<ViewStyle>
 }
 
-export const Dropdown = ({ options, initial = options[0], onChange, styles, style }: Props) => {
+export const Dropdown = ({
+  options,
+  initial = options[0],
+  onChange,
+  styles,
+  style,
+  ...props
+}: Props & TouchableOpacityProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const [current, setCurrent] = useState(initial)
   const [open, setOpen] = useState(false)
 
   return (
-    <TouchableOpacity style={sheet.touchable} onPress={() => !open && setOpen(true)}>
+    <TouchableOpacity style={sheet.touchable} onPress={() => !open && setOpen(true)} {...props}>
       <View style={[sheet.wrapper, style]}>
         <View style={sheet.main}>
           <Text style={sheet.currentText}>{current}</Text>

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Text as RNText, TextStyle, StyleProp } from 'react-native'
+import { Text as RNText, TextStyle, StyleProp, TextProps } from 'react-native'
 import { Font, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
@@ -17,12 +17,21 @@ interface Props {
   style?: StyleProp<TextStyle>
 }
 
-export const Text = ({ children, large, bold, small, styles, style }: Props) => {
+export const Text = ({
+  children,
+  large,
+  bold,
+  small,
+  styles,
+  style,
+  ...props
+}: Props & TextProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
 
   return (
     <RNText
       style={[style, large && Font.large, bold && Font.bold, small && Font.small, sheet.text]}
+      {...props}
     >
       {children}
     </RNText>

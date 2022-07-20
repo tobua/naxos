@@ -1,5 +1,13 @@
 import React, { useMemo, ReactNode } from 'react'
-import { StyleProp, View, Text, TouchableOpacity, ViewStyle, TextStyle } from 'react-native'
+import {
+  StyleProp,
+  View,
+  Text,
+  TouchableOpacity,
+  ViewStyle,
+  TextStyle,
+  TouchableOpacityProps,
+} from 'react-native'
 import { Color, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
@@ -25,7 +33,14 @@ interface Props {
   style?: StyleProp<ViewStyle>
 }
 
-export const Button = ({ children, title, onPress, styles, style }: Props) => {
+export const Button = ({
+  children,
+  title,
+  onPress,
+  styles,
+  style,
+  ...props
+}: Props & TouchableOpacityProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
 
   if (!children) {
@@ -33,7 +48,7 @@ export const Button = ({ children, title, onPress, styles, style }: Props) => {
   }
 
   return (
-    <TouchableOpacity style={sheet.touchable} onPress={onPress}>
+    <TouchableOpacity style={sheet.touchable} onPress={onPress} {...props}>
       <View style={[sheet.view, style]}>{children}</View>
     </TouchableOpacity>
   )

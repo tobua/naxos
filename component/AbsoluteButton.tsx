@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { StyleProp, View, TouchableOpacity, ViewStyle } from 'react-native'
+import { StyleProp, View, TouchableOpacity, ViewStyle, TouchableOpacityProps } from 'react-native'
 import { Space, mergeStyles } from '../style'
 import { Icon } from './Icon'
 
@@ -47,11 +47,16 @@ export const AbsoluteButton = ({
   space = Space.medium,
   styles,
   style,
-}: Props) => {
+  ...props
+}: Props & TouchableOpacityProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
 
   return (
-    <TouchableOpacity style={[sheet.touchable, getPosition(position, space)]} onPress={onPress}>
+    <TouchableOpacity
+      style={[sheet.touchable, getPosition(position, space)]}
+      onPress={onPress}
+      {...props}
+    >
       <View style={[sheet.view, style]}>
         <Icon name={type} />
       </View>

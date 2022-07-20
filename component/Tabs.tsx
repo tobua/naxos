@@ -1,5 +1,13 @@
 import React, { useState, useMemo, cloneElement, ReactNode } from 'react'
-import { View, Text, TouchableOpacity, StyleProp, TextStyle, ViewStyle } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+  ViewProps,
+} from 'react-native'
 import { Space, mergeStyles } from '../style'
 
 const activeStyle = (active: boolean) =>
@@ -34,12 +42,12 @@ interface Props {
 
 // TODO animation possibly with https://reactnative.dev/docs/layoutanimation
 
-export const Tabs = ({ children, labels, styles, style }: Props) => {
+export const Tabs = ({ children, labels, styles, style, ...props }: Props & ViewProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const [current, setCurrent] = useState(0)
 
   return (
-    <View style={[sheet.wrapper, style]}>
+    <View style={[sheet.wrapper, style]} {...props}>
       <View style={sheet.labels}>
         {labels.map((label, index) => {
           let inner = label

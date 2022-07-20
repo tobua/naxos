@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Image, ImageStyle, StyleProp } from 'react-native'
+import { Image, ImageProps, ImageStyle, StyleProp } from 'react-native'
 import { mergeStyles } from '../style'
 import add from '../asset/icon/add.png'
 import addRounded from '../asset/icon/add-rounded.png'
@@ -107,7 +107,8 @@ export const Icon = ({
   color = 'black',
   styles,
   style,
-}: Props) => {
+  ...props
+}: Props & Omit<ImageProps, 'source'>) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const icon = icons[name][rounded ? 'rounded' : 'regular']
 
@@ -119,6 +120,7 @@ export const Icon = ({
     <Image
       style={[sheet.image, sheet[size], sheet[direction], { tintColor: color }, style]}
       source={{ uri: icon }}
+      {...props}
     />
   )
 }

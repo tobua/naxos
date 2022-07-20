@@ -1,5 +1,5 @@
 import React, { useMemo, ReactNode } from 'react'
-import { View, StyleProp, ViewStyle } from 'react-native'
+import { View, StyleProp, ViewStyle, ViewProps } from 'react-native'
 import { Space, mergeStyles } from '../style'
 
 const createBaseStyles = () => ({
@@ -19,10 +19,14 @@ interface Props {
   style?: StyleProp<ViewStyle>
 }
 
-export const Content = ({ children, styles, style }: Props) => {
+export const Content = ({ children, styles, style, ...props }: Props & ViewProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
 
-  return <View style={[sheet.wrapper, style]}>{children}</View>
+  return (
+    <View style={[sheet.wrapper, style]} {...props}>
+      {children}
+    </View>
+  )
 }
 
 Content.createStyles = createBaseStyles

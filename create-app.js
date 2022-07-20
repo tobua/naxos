@@ -1,8 +1,7 @@
 #!/usr/bin/env node
+import { cpSync, renameSync, rmSync } from 'fs'
 import { join } from 'path'
 import { execSync } from 'child_process'
-import copy from 'recursive-copy'
-import rimraf from 'rimraf'
 
 // Enhances source files inside /app with a fresh RN project template.
 const appName = 'NaxosApp'
@@ -14,15 +13,11 @@ execSync(`npx react-native init ${appName}`, {
   stdio: 'inherit',
 })
 
-// Copy to destination directory, leaving source files untouched.
-await copy(appName, 'app', {
-  dot: true,
-  overwrite: false,
-  filter: ['**/*', '!App.js'],
-})
+cpSync('app/App.js', `${appName}/App.js`)
 
-// Remove temporary project directory.
-rimraf.sync(appName)
+rmSync('app', { recursive: true })
+
+renameSync(appName, 'app')
 
 // Install this package locally, avoiding symlinks.
 execSync('npm install $(npm pack .. | tail -1) --legacy-peer-deps', {
@@ -32,9 +27,9 @@ execSync('npm install $(npm pack .. | tail -1) --legacy-peer-deps', {
 
 console.log('')
 console.log('🍞 React Native App created inside /app.')
-console.log('🛠️ To run the example with the plugin included:')
+console.log('🛠️  To run the example with the plugin included:')
 console.log('🐚 cd app')
 console.log('🐚 npm run ios / npm run android')
-console.log('🌪️ To copy over the changes from the plugin source run:')
+console.log('🌪️  To copy over the changes from the plugin source run:')
 console.log('🐚 npm run watch')
-console.log('🛠️ This will copy changes over to the app.')
+console.log('🛠️  This will copy changes over to the app.')
