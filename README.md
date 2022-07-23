@@ -171,7 +171,7 @@ const customImage = <Avatar source={profileImage} />
 import { Intro, Text } from 'naxos'
 
 const Slides = (
-  <Intro skip={false} onDone={() => setDone(true)}>
+  <Intro skippable onDone={() => setDone(true)}>
     <Intro.Slide key="first">
       <Text>First Slide</Text>
     </Intro.Slide>

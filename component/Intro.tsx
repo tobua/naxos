@@ -47,6 +47,25 @@ const backgroundStyle = (active: boolean) => ({
   backgroundColor: active ? 'black' : 'lightgray',
 })
 
+const buttonTitle = (isLast: boolean, skippable?: boolean) =>
+  isLast ? 'Done' : skippable ? 'Skip' : 'Next'
+
+const animateSlide = (
+  state: { index: number },
+  position: Animated.Value,
+  setSlideIndex: (value: number) => void
+) => {
+  Animated.timing(position, {
+    toValue: state.index * windowWidth * -1,
+    easing: Easing.ease,
+    useNativeDriver: false,
+    duration: 300,
+  }).start()
+  setTimeout(() => {
+    setSlideIndex(state.index)
+  }, 300)
+}
+
 const windowWidth = Dimensions.get('window').width
 const switchSlideThreshold = windowWidth / 3
 
@@ -62,9 +81,17 @@ interface Props {
   }
   style?: StyleProp<ViewStyle>
   onDone?: () => void
+  skippable?: boolean
 }
 
-export const Intro = ({ children, styles, style, onDone, ...props }: Props & ViewProps) => {
+export const Intro = ({
+  children,
+  styles,
+  style,
+  onDone,
+  skippable,
+  ...props
+}: Props & ViewProps) => {
   const sheet = useMemo(() => mergeStyles(createBaseStyles(), styles), [styles])
   const state = useMemo(
     () => ({
@@ -76,6 +103,7 @@ export const Intro = ({ children, styles, style, onDone, ...props }: Props & Vie
   const position = useRef(new Animated.Value(0)).current
   const childrenArray = Array.isArray(children) ? children : [children]
   const childrenCount = childrenArray.length
+  const isLastSlide = slideIndex === childrenCount - 1
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
@@ -97,15 +125,7 @@ export const Intro = ({ children, styles, style, onDone, ...props }: Props & Vie
           state.index--
         }
 
-        Animated.timing(position, {
-          toValue: state.index * windowWidth * -1,
-          easing: Easing.ease,
-          useNativeDriver: false,
-          duration: 300,
-        }).start()
-        setTimeout(() => {
-          setSlideIndex(state.index)
-        }, 300)
+        animateSlide(state, position, setSlideIndex)
       },
     })
   ).current
@@ -134,7 +154,17 @@ export const Intro = ({ children, styles, style, onDone, ...props }: Props & Vie
             <View key={index} style={[sheet.dot, backgroundStyle(slideIndex === index)]} />
           ))}
         </View>
-        <Button title={slideIndex === childrenCount - 1 ? 'Done' : 'Skip'} onPress={onDone} />
+        <Button
+          title={buttonTitle(isLastSlide, skippable)}
+          onPress={() => {
+            if (!skippable && !isLastSlide) {
+              state.index++
+              animateSlide(state, position, setSlideIndex)
+            } else if (typeof onDone === 'function') {
+              onDone()
+            }
+          }}
+        />
       </View>
     </View>
   )
