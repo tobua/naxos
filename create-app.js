@@ -8,16 +8,25 @@ const appName = 'NaxosApp'
 
 console.log('⌛ Initializing a fresh RN project...')
 
-execSync(`npx react-native init ${appName}`, {
-  // Write output to cnosole.
-  stdio: 'inherit',
-})
+try {
+  execSync(`npx react-native init ${appName}`, {
+    // Write output to console.
+    stdio: 'inherit',
+  })
+} catch (error) {
+  // Ignore errors (ruby version check).
+}
 
-cpSync('app/App.js', `${appName}/App.js`)
+cpSync('app/App.tsx', `${appName}/App.tsx`)
 
 rmSync('app', { recursive: true })
 
 renameSync(appName, 'app')
+
+// Run build to ensure distributed files for plugin exist.
+execSync('npm run build', {
+  stdio: 'inherit',
+})
 
 // Install this package locally, avoiding symlinks.
 execSync('npm install $(npm pack .. | tail -1) --legacy-peer-deps', {

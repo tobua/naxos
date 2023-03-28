@@ -56,7 +56,7 @@ const Heading = ({ children }) => (
   </View>
 )
 
-const Tab = ({ label, active }) => (
+const Tab = ({ label, active }: { label: string; active?: boolean }) => (
   <TabBar.Tab>
     <Text bold={active}>{label}</Text>
   </TabBar.Tab>
