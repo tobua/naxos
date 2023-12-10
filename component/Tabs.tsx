@@ -11,7 +11,7 @@ import {
 import { Space, mergeStyles } from '../style'
 
 const activeStyle = (active: boolean) =>
-  ({ fontWeight: active ? 'bold' : 'normal' } as StyleProp<TextStyle>)
+  ({ fontWeight: active ? 'bold' : 'normal' }) as StyleProp<TextStyle>
 
 const TextTab = ({ active, label }: { active: boolean; label: string }) => (
   <Text style={activeStyle(active)}>{label}</Text>

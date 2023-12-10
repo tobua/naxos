@@ -20,7 +20,7 @@ test('Renders inside a View with initialCount prop.', () => {
   const rendered = renderer.create(
     <View style={styles.color}>
       <NavBar title="test" />
-    </View>
+    </View>,
   )
   const tree = rendered.toJSON()
   // @ts-ignore

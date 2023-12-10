@@ -8,14 +8,10 @@ const appName = 'NaxosApp'
 
 console.log('⌛ Initializing a fresh RN project...')
 
-try {
-  execSync(`npx react-native init ${appName}`, {
-    // Write output to console.
-    stdio: 'inherit',
-  })
-} catch (error) {
-  // Ignore errors (ruby version check).
-}
+execSync(`npx react-native init ${appName} --skip-git-init true --install-pods true`, {
+  // Write output to cnosole.
+  stdio: 'inherit',
+})
 
 cpSync('app/App.tsx', `${appName}/App.tsx`)
 

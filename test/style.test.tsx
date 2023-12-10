@@ -47,7 +47,7 @@ test('Button styles can modified through styles prop.', () => {
   expect(styles.text.color).toBe(interactColor)
 
   const rendered = renderer.create(
-    <Button title="Press me!" styles={{ text: { color: highlightColor } }} />
+    <Button title="Press me!" styles={{ text: { color: highlightColor } }} />,
   )
   const tree = rendered.toJSON()
   // @ts-ignore

@@ -1,5 +1,6 @@
 node_modules
 package-lock.json
 dist
+NaxosApp
 app/**/*
 !app/App.tsx

@@ -53,7 +53,7 @@ const buttonTitle = (isLast: boolean, skippable?: boolean) =>
 const animateSlide = (
   state: { index: number },
   position: Animated.Value,
-  setSlideIndex: (value: number) => void
+  setSlideIndex: (value: number) => void,
 ) => {
   Animated.timing(position, {
     toValue: state.index * windowWidth * -1,
@@ -97,7 +97,7 @@ export const Intro = ({
     () => ({
       index: 0,
     }),
-    []
+    [],
   )
   const [slideIndex, setSlideIndex] = useState(0)
   const position = useRef(new Animated.Value(0)).current
@@ -127,7 +127,7 @@ export const Intro = ({
 
         animateSlide(state, position, setSlideIndex)
       },
-    })
+    }),
   ).current
 
   return (
